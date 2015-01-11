@@ -32,7 +32,43 @@ class MyWebServer(SocketServer.BaseRequestHandler):
     def handle(self):
         self.data = self.request.recv(1024).strip()
         print ("Got a request of: %s\n" % self.data)
-        self.request.sendall("OK")
+        self.dataList = self.data.split()
+        if self.dataList[0] == "GET":
+            self.get()
+        else:
+            self.request.sendall("OK")
+
+    def get(self):
+        #Used to handle a get request/ Respond to a GET request
+        #checks to see if 404 error is thrown
+        try:
+            sendReply = False
+            if self.dataList[1]=="/":
+                self.dataList[1] = "/index.html"
+            if self.dataList[1] == "/deep/":
+                self.dataList[1] = "/deep/index.html"
+
+            if self.dataList[1].endswith(".html"):
+                mimeType="text/html"
+                sendReply = True
+            if self.dataList[1].endswith(".css"):
+                mimeType="text/css"
+                sendReply = True
+            
+            if sendReply:
+                staticFile = open("www"+ self.dataList[1])
+        
+                self.request.send("HTTP/1.1 200\r\n")
+                self.request.send("Content-Type: %s\r\n\n" %mimeType)
+                self.request.send(staticFile.read())
+                staticFile.close()
+            else:
+                self.request.send("HTTP/1.1 404 Not Found\r\n")
+                self.request.send("Content-Type: text/html\r\n\n")
+                self.request.send("<html><head>Error</head><body>404, File Not Found %s</body></html>" %self.dataList[1])
+
+        except:
+            self.request.send("HTTP/1.1 404 Not Found\r\n\n")
 
 if __name__ == "__main__":
     HOST, PORT = "localhost", 8080
@@ -43,4 +79,10 @@ if __name__ == "__main__":
 
     # Activate the server; this will keep running until you
     # interrupt the program with Ctrl-C
-    server.serve_forever()
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print ' was pushed, server will be shut down'
+        server.socket.close()
+
+
