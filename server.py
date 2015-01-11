@@ -1,4 +1,5 @@
 import SocketServer
+import os
 # coding: utf-8
 
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
@@ -17,7 +18,7 @@ import SocketServer
 #
 #
 # Furthermore it is derived from the Python documentation examples thus
-# some of the code is Copyright © 2001-2013 Python Software
+# some of the code is Copyright 2001-2013 Python Software
 # Foundation; All Rights Reserved
 #
 # http://docs.python.org/2/library/socketserver.html
@@ -43,6 +44,7 @@ class MyWebServer(SocketServer.BaseRequestHandler):
         #checks to see if 404 error is thrown
         try:
             sendReply = False
+
             if self.dataList[1]=="/":
                 self.dataList[1] = "/index.html"
             if self.dataList[1] == "/deep/":
@@ -54,7 +56,9 @@ class MyWebServer(SocketServer.BaseRequestHandler):
             if self.dataList[1].endswith(".css"):
                 mimeType="text/css"
                 sendReply = True
-            
+            if os.path.exists(os.getcwd()+"www"+self.dataList[1]):
+                sendReply = False
+
             if sendReply:
                 staticFile = open("www"+ self.dataList[1])
         
