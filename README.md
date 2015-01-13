@@ -1,16 +1,16 @@
 CMPUT404-assignment-webserver
 =============================
 
-CMPUT404-assignment-webserver
+CMPUT404-assignment-webserver. Makes a simple webserver.
 
 See requirements.org (plain-text) for a description of the project.
 
-Make a simple webserver.
+Collaborated with Aaron Padlesky
 
 Contributors / Licensing
 ========================
 
-Copyright 2015 Pranjali Pokharel
+Copyright 2015 Pranjali Pokharel, Aaron Padlesky
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
