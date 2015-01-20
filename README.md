@@ -5,7 +5,7 @@ CMPUT404-assignment-webserver. Makes a simple webserver.
 
 See requirements.org (plain-text) for a description of the project.
 
-Collaborated with Aaron Padlesky
+Collaborated with Pranjali Pokharel
 
 Contributors / Licensing
 ========================
