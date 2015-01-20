@@ -49,6 +49,12 @@ class MyWebServer(SocketServer.BaseRequestHandler):
 
             if self.dataList[1]=="/":
                 self.dataList[1] = "/index.html"
+
+            if self.dataList[1] == "/deep":
+                self.request.send("HTTP/1.1 301 \r\n")
+                self.request.send("Location: deep/ \r\n\r\n")
+                return
+
             if self.dataList[1] == "/deep/":
                 self.dataList[1] = "/deep/index.html"
 
